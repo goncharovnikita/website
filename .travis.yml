@@ -1,0 +1,5 @@
+matrix:
+  include:
+    - language: javascript
+
+      script: front/deploy-docker.sh
