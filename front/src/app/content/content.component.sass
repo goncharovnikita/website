@@ -1,0 +1,22 @@
+@import '~variables.sass'
+
+.layout
+  display: grid
+  grid-template-rows: 7% 93%
+  grid-template-areas: "header" "content"
+  height: 100%
+
+.layout__header
+  grid-area: header
+  display: grid
+  grid-template-columns: 25% 50% 25%
+  grid-template-areas: ". header-center ."
+
+.layout__header__center
+  grid-area: header-center
+  align-self: center
+  justify-self: center
+
+.layout__content
+  grid-area: content
+  background-color: yellow
