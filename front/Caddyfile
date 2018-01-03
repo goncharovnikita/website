@@ -1,4 +1,5 @@
 
-:2015 {
-  root  /app/
+localhost:80, goncharovnikita.com {
+  root  /dist/
+  tls goncharovnikita.dev@gmail.com
 }
