@@ -14,7 +14,7 @@ func serve(port string) {
 	log.Printf("Server listening on %s\n", port)
 
 	mux = http.NewServeMux()
-	mux.Handle("/api/v1/", httpLogger(http.StripPrefix("/api/v1/", apiHandler(mux))))
+	mux.Handle("/api/v1/", httpCORS(httpLogger(http.StripPrefix("/api/v1/", apiHandler(mux)))))
 
 	log.Print(http.ListenAndServe(port, mux))
 }
@@ -61,6 +61,7 @@ func handleGetMediumFeed() http.Handler {
 		}
 
 		rw.Header().Add("content-type", "application/json")
+		rw.Header().Add("Access-Control-Allow-Origin", "*")
 
 		rw.Write(response)
 		// log.Printf("%s %d %s\n", req.URL.Path, http.StatusOK, time.Since(start))

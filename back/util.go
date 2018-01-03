@@ -14,3 +14,10 @@ func httpLogger(h http.Handler) http.Handler {
 		log.Printf("%s\n", time.Since(start))
 	})
 }
+
+func httpCORS(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Header().Add("Access-Control-Allow-Origin", "http://localhost:4200")
+		h.ServeHTTP(rw, r)
+	})
+}
