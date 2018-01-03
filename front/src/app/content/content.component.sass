@@ -1,4 +1,7 @@
 @import '~variables.sass'
+@import '~mixins.sass'
+
+@include scrollbars(4px, $accentColor, $primaryColor)
 
 .layout
   display: grid
@@ -19,3 +22,38 @@
 
 .layout__content
   grid-area: content
+  display: grid
+  grid-template-rows: 100% 100% 100%
+  grid-template-areas: "medium" "git" "twitter"
+  overflow-y: auto
+  scroll-snap-points-y: repeat(100%);
+  scroll-snap-type: mandatory;
+  scroll-snap-destination: 100% 0%;
+
+.content__medium
+  grid-area: medium
+  background-color: $mediumBackground
+  overflow-y: auto
+
+.content__git
+  grid-area: git
+  background-color: $gitBackground
+  overflow-y: auto
+
+.content__twitter
+  grid-area: twitter
+  background-color: $twitterBackground
+  overflow-y: auto
+
+.content__header
+  display: grid
+  grid-template-areas: ". content-header ."
+
+.content__header-title
+  grid-area: content-header
+  align-self: center
+  justify-self: center
+  height: 4vh
+  padding: 12px 0
+  img 
+    height: 100%

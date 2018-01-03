@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ContentModule } from './content/content.module';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -14,7 +15,9 @@ import { ContentModule } from './content/content.module';
     BrowserModule,
     ContentModule
   ],
-  providers: [],
+  providers: [
+    { provide: 'BASE_URL', useValue: environment.baseURL }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
