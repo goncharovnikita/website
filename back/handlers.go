@@ -29,12 +29,11 @@ func apiHandler(mux *http.ServeMux) (result http.Handler) {
 
 func handleGetMediumFeed() http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
-		// start := time.Now()
+		rw.Header().Add("Access-Control-Allow-Origin", "*")
 		var status int
 		if req.Method != http.MethodGet {
 			status = http.StatusMethodNotAllowed
 			rw.WriteHeader(status)
-			// log.Printf("%s %d %s\n", req.URL.Path, status, time.Since(start))
 			return
 		}
 
@@ -48,7 +47,6 @@ func handleGetMediumFeed() http.Handler {
 			log.Print(err)
 			status = http.StatusInternalServerError
 			rw.WriteHeader(status)
-			// log.Printf("%s %d %s\n", req.URL.Path, status, time.Since(start))
 			return
 		}
 
@@ -56,14 +54,11 @@ func handleGetMediumFeed() http.Handler {
 			log.Print(err)
 			status = http.StatusInternalServerError
 			rw.WriteHeader(status)
-			// log.Printf("%s %d %s\n", req.URL.Path, status, time.Since(start))
 			return
 		}
 
 		rw.Header().Add("content-type", "application/json")
-		rw.Header().Add("Access-Control-Allow-Origin", "*")
 
 		rw.Write(response)
-		// log.Printf("%s %d %s\n", req.URL.Path, http.StatusOK, time.Since(start))
 	})
 }
