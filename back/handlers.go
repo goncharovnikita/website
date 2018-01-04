@@ -17,7 +17,7 @@ func serve(port string) {
 	log.Printf("Server listening on %s\n", port)
 
 	mux = http.NewServeMux()
-	mux.Handle("/api/v1/", util.HTTPLogger(http.StripPrefix("/api/v1/", apiHandler(mux))))
+	mux.Handle("/api/v1/", util.HTTPCORS(util.HTTPLogger(http.StripPrefix("/api/v1/", apiHandler(mux)))))
 
 	log.Print(http.ListenAndServe(port, mux))
 }

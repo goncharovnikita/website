@@ -16,7 +16,8 @@ func HTTPLogger(h http.Handler) http.Handler {
 	})
 }
 
-func httpCORS(h http.Handler) http.Handler {
+// HTTPCORS cors
+func HTTPCORS(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		rw.Header().Add("Access-Control-Allow-Origin", "*")
 		h.ServeHTTP(rw, r)
