@@ -14,11 +14,11 @@ export class MediumContentComponent implements OnInit {
 
   constructor(private $s: ContentService) {}
   ngOnInit() {
-    this.$s.fetchMediumFeed()
-      .catch(e => {
-        console.log(e);
-        return Observable.of(null);
-      })
-      .subscribe(f => this.feed.next(f));
+    // this.$s.fetchMediumFeed()
+    //   .catch(e => {
+    //     console.log(e);
+    //     return Observable.of(null);
+    //   })
+    //   .subscribe(f => this.feed.next(f));
   }
 }
