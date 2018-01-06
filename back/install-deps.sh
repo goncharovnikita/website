@@ -1,3 +1,3 @@
 #!/bin/sh
 
-go get githib.com/goncharovnikita/wallpaperize
+go get github.com/goncharovnikita/wallpaperize
