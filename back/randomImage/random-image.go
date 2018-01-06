@@ -22,8 +22,6 @@ func Handler() http.Handler {
 			file   *os.File
 		)
 
-		rw.Header().Add("Access-Control-Allow-Origin", "*")
-
 		if err = u.CreateDir(".cache"); err != nil {
 			rw.WriteHeader(500)
 			log.Print(err)
@@ -73,7 +71,6 @@ func RefreshHandler() http.Handler {
 			err         error
 			unsplashAPI w.UnsplashAPI
 		)
-		rw.Header().Add("Access-Control-Allow-Origin", "*")
 		if result, err = unsplashAPI.GetRandomImage(); err != nil {
 			rw.WriteHeader(500)
 			log.Print(err)

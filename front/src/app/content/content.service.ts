@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 export class ContentService {
   private readonly GET_MEDIUM_FEED = 'get/medium/feed';
   private readonly GET_GIT_REPOS   = 'get/git/repos';
+  private readonly GET_RANDOM_IMAGE   = 'get/random/image';
   constructor(
     private $h: HttpClient,
     @Inject('BASE_URL') private baseURL: string

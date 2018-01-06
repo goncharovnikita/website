@@ -29,3 +29,7 @@
     <app-content></app-content>
   </div><!-- /content -->
 </div>
+
+<ng-container *ngIf="(image | async); let img">
+  <div class="modal_background" [ngStyle]="{'backgroundImage': image | async, 'filter': (refreshingImage | async) ? 'blur(5px)' : ''}" ></div>
+</ng-container>

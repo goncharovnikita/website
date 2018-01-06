@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ContentModule } from './content/content.module';
 import { environment } from '../environments/environment';
 import { ScrollModule } from './scroll/scroll.module';
+import { AppService } from './app.service';
 
 
 @NgModule({
