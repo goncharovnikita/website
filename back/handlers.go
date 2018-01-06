@@ -18,12 +18,13 @@ func serve(port string) {
 	log.Printf("Server listening on %s\n", port)
 
 	mux = http.NewServeMux()
-	mux.Handle("/api/v1/", util.HTTPCORS(util.HTTPLogger(http.StripPrefix("/api/v1/", apiHandler(mux)))))
+	mux.Handle("/api/v1/", util.HTTPCORS(util.HTTPLogger(http.StripPrefix("/api/v1", apiHandler()))))
 
 	log.Print(http.ListenAndServe(port, mux))
 }
 
-func apiHandler(mux *http.ServeMux) (result http.Handler) {
+func apiHandler() (result http.Handler) {
+	mux := http.NewServeMux()
 	mux.Handle("/get/medium/feed", handleGetMediumFeed())
 	mux.Handle("/get/git/repos", handleGetGitRepos())
 	mux.Handle("/get/random/image", rnd.Handler())
