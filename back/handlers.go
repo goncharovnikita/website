@@ -28,6 +28,7 @@ func apiHandler() (result http.Handler) {
 	mux.Handle("/get/medium/feed", handleGetMediumFeed())
 	mux.Handle("/get/git/repos", handleGetGitRepos())
 	mux.Handle("/get/random/image", rnd.Handler())
+	mux.Handle("/refresh/random/image", rnd.RefreshHandler())
 
 	result = mux
 

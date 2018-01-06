@@ -11,14 +11,15 @@ import (
 	u "../util"
 )
 
+var imageName = "__rnd_img.png"
+
 // Handler handler
 func Handler() http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		var (
-			imageName = "__rnd_img.png"
-			result    []byte
-			err       error
-			file      *os.File
+			result []byte
+			err    error
+			file   *os.File
 		)
 
 		rw.Header().Add("Access-Control-Allow-Origin", "*")
@@ -48,17 +49,7 @@ func Handler() http.Handler {
 
 			rw.Write(result)
 
-			if file, err = os.OpenFile("./.cache/"+imageName, os.O_CREATE|os.O_RDWR, 0666); err != nil {
-				log.Print(err)
-				return
-			}
-
-			defer file.Close()
-
-			if _, err = file.Write(result); err != nil {
-				log.Print(err)
-				return
-			}
+			writeCache(result)
 			return
 		}
 
@@ -71,5 +62,30 @@ func Handler() http.Handler {
 		}
 
 		rw.Write(result)
+	})
+}
+
+// RefreshHandler refreshHandler
+func RefreshHandler() http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		var (
+			result      []byte
+			err         error
+			unsplashAPI w.UnsplashAPI
+		)
+		rw.Header().Add("Access-Control-Allow-Origin", "*")
+		if result, err = unsplashAPI.GetRandomImage(); err != nil {
+			rw.WriteHeader(500)
+			log.Print(err)
+			return
+		}
+
+		if err = writeCache(result); err != nil {
+			rw.WriteHeader(500)
+			log.Print(err)
+			return
+		}
+
+		rw.WriteHeader(http.StatusNoContent)
 	})
 }
