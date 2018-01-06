@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	feed "./feed"
+	rnd "./randomImage"
 	util "./util"
 )
 
@@ -25,6 +26,7 @@ func serve(port string) {
 func apiHandler(mux *http.ServeMux) (result http.Handler) {
 	mux.Handle("/get/medium/feed", handleGetMediumFeed())
 	mux.Handle("/get/git/repos", handleGetGitRepos())
+	mux.Handle("/get/random/image", rnd.Handler())
 
 	result = mux
 
