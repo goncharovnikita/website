@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+
+	_ "./tg"
 )
 
 func init() {
