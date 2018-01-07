@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseURL: 'http://back:8080/api/v1/'
+  baseURL: 'http://api.goncharovnikita.com/api/v1/'
 };
