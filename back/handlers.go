@@ -7,6 +7,7 @@ import (
 
 	feed "./feed"
 	rnd "./randomImage"
+	tg "./tg"
 	util "./util"
 )
 
@@ -19,6 +20,7 @@ func serve(port string) {
 
 	mux = http.NewServeMux()
 	mux.Handle("/api/v1/", util.HTTPCORS(util.HTTPLogger(http.StripPrefix("/api/v1", apiHandler()))))
+	mux.Handle("/tg/hooks/", util.HTTPCORS(util.HTTPLogger(http.StripPrefix("/tg/hooks", tgHandler()))))
 
 	log.Print(http.ListenAndServe(port, mux))
 }
@@ -29,6 +31,16 @@ func apiHandler() (result http.Handler) {
 	mux.Handle("/get/git/repos", handleGetGitRepos())
 	mux.Handle("/get/random/image", rnd.Handler())
 	mux.Handle("/refresh/random/image", rnd.RefreshHandler())
+
+	result = mux
+
+	return
+}
+
+func tgHandler() (result http.Handler) {
+	mux := http.NewServeMux()
+
+	mux.Handle("/new/docker/build", tg.NewDockerBuildHandler())
 
 	result = mux
 
