@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseURL: 'http://api.goncharovnikita.com/api/v1/'
+  baseURL: 'https://api.goncharovnikita.com/api/v1/'
 };
