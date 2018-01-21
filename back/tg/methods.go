@@ -6,13 +6,13 @@ import (
 	"gopkg.in/telegram-bot-api.v4"
 )
 
-func notifyNewDockerBuild() {
+func notifyNewDockerBuild(projectName string) {
 	var (
 		msg tgbotapi.MessageConfig
 		err error
 	)
 
-	msg = tgbotapi.NewMessage(int64(chatID), "New docker build!")
+	msg = tgbotapi.NewMessage(int64(chatID), "New docker build from "+projectName+"!")
 
 	if _, err = botAPI.Send(msg); err != nil {
 		log.Print(err)
