@@ -1,6 +1,8 @@
 package tg
 
 import (
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -26,14 +28,24 @@ func NewDockerBuildHandler() http.Handler {
 // ErrorLogHandler handler
 func ErrorLogHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		logMSG := r.URL.Query().Get("error_message")
 
-		if len(logMSG) < 1 {
-			w.WriteHeader(400)
+		if r.Method != http.MethodPost {
+			w.WriteHeader(405)
 			return
 		}
 
-		notifyErrorLog(logMSG)
+		var params struct{ ErrorMessage string `json:"error_message"` }
+		var err error
+
+		defer r.Body.Close()
+
+		if err = json.NewDecoder(r.Body).Decode(&params); err != nil {
+			w.WriteHeader(500)
+			log.Println(err)
+			return
+		}
+
+		notifyErrorLog(params.ErrorMessage)
 
 		w.WriteHeader(204)
 	})
