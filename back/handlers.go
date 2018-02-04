@@ -41,6 +41,7 @@ func tgHandler() (result http.Handler) {
 	mux := http.NewServeMux()
 
 	mux.Handle("/new/docker/build", tg.NewDockerBuildHandler())
+	mux.Handle("/new/error", tg.ErrorLogHandler())
 
 	result = mux
 

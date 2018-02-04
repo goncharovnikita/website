@@ -19,3 +19,18 @@ func notifyNewDockerBuild(projectName string) {
 		return
 	}
 }
+
+// notify error log
+func notifyErrorLog(e string) {
+	var (
+		msg tgbotapi.MessageConfig
+		err error
+	)
+
+	msg = tgbotapi.NewMessage(int64(chatID), e)
+
+	if _, err = botAPI.Send(msg); err != nil {
+		log.Println(err)
+		return
+	}
+}
