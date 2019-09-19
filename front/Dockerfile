@@ -8,12 +8,12 @@ RUN npm install
 
 RUN npm run build -- --prod
 
-FROM abiosoft/caddy
+FROM nginx:alpine
 
-COPY --from=builder /app/dist /app
+COPY --from=builder /app/build /usr/share/nginx/html
 
-COPY Caddyfile /etc/Caddyfile
+COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80 443 2015
+EXPOSE 80
 
-CMD ["--conf", "/etc/Caddyfile", "--log", "stdout"]
+CMD ["nginx", "-g", "daemon off;"]
