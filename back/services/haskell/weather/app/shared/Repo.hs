@@ -1,5 +1,5 @@
 {-# LANGUAGE ExtendedDefaultRules #-}
-module Repo where
+module Repo (getLastWeather, insertWeather) where
 
 import Database.MongoDB
 import Control.Monad.Trans (liftIO, MonadIO)
@@ -34,6 +34,7 @@ buildWeatherRecord w = do
       Nothing -> return Nothing
 
 
-insertWeather :: Weather -> Action IO ()
-insertWeather (Weather tId tInt tFl upZero dt) = do
-    insert_ "weather" ["_id" =: tId, "t_int" =: tInt, "t_fl" =: tFl, "up_zero" =: upZero, "dt" =: dt]
+insertWeather :: Pipe -> Weather -> IO ()
+insertWeather pipe (Weather tId tInt tFl upZero dt) = do
+    withPipe pipe $ do
+        insert_ "weather" ["_id" =: tId, "t_int" =: tInt, "t_fl" =: tFl, "up_zero" =: upZero, "dt" =: dt]

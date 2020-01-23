@@ -1,9 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
 module Domain where
 
 import Data.Bson (ObjectId, genObjectId)
 import Data.Time (UTCTime, getCurrentTime)
 import Data.Aeson
 import Data.ByteString.Lazy (ByteString)
+import GHC.Generics
 
 import qualified Data.Text as T
 
@@ -42,3 +44,36 @@ instance ToJSON Weather where
 encodeWeather :: Weather -> ByteString
 encodeWeather = encode
 -- End Weather
+
+-- VendorWeather
+data VendorWeather = VendorWeather {
+    nowDt :: UTCTime
+  , fact :: WeatherFact
+                                   } deriving (Show, Generic)
+
+instance ToJSON VendorWeather where
+    toEncoding = genericToEncoding defaultOptions
+
+instance FromJSON VendorWeather where
+    parseJSON = withObject "VendorWeather" $ \v -> VendorWeather
+        <$> v .: "now_dt"
+        <*> v .: "fact"
+
+data WeatherFact = WeatherFact {
+    temp :: Int
+                               } deriving (Show, Generic)
+
+
+instance ToJSON WeatherFact where
+    toEncoding = genericToEncoding defaultOptions
+
+instance FromJSON WeatherFact
+-- End VendorWeather
+
+weatherFromVendor :: VendorWeather -> IO (Weather)
+weatherFromVendor (VendorWeather nowDt (WeatherFact temp)) = do
+    wId <- genObjectId
+    let tInt = abs temp
+        upZero = temp > 0
+        tFl = 0
+    return $ Weather wId tInt tFl upZero nowDt

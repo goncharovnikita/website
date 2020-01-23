@@ -32,12 +32,14 @@ executable weather-server
   hs-source-dirs:      app/server
                     ,  app/shared
   default-language:    Haskell2010
-  ghc-options:
-    -XOverloadedStrings
+  default-extensions:
+    OverloadedStrings
 
 executable weather-scheduler
   main-is:             Main.hs
-  -- other-modules:
+  other-modules:       Domain
+                    ,  Repo
+                    ,  WeatherGetter
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13
                     ,  cron
@@ -47,8 +49,10 @@ executable weather-scheduler
                     ,  bson
                     ,  aeson
                     ,  text
+                    ,  req
+                    ,  bytestring
   hs-source-dirs:      app/scheduler
                     ,  app/shared
   default-language:    Haskell2010
-  ghc-options:
-    -XOverloadedStrings
+  default-extensions:
+    OverloadedStrings
