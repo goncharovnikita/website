@@ -4,7 +4,7 @@ WORKDIR /app/weather
 
 RUN cabal update
 
-COPY ./weather.cabal app/weather/weather.cabal
+COPY ./weather.cabal /app/weather/weather.cabal
 
 RUN cabal install --only-dependencies -j4
 
