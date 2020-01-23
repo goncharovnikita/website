@@ -1,0 +1,15 @@
+FROM haskell:8.6.5
+
+WORKDIR /app/weather
+
+RUN cabal update
+
+COPY ./weather.cabal app/weather/weather.cabal
+
+RUN cabal install --only-dependencies -j4
+
+COPY . /app/weather
+
+RUN cabal install weather-server
+
+CMD ["weather-server"]

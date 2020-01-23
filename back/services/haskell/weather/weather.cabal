@@ -18,7 +18,9 @@ extra-source-files:  CHANGELOG.md
 
 executable weather-server
   main-is:             Main.hs
-  -- other-modules:
+  other-modules:       Server
+                    ,  Repo
+                    ,  Domain
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13
                     ,  mongoDB

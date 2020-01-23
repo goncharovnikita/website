@@ -12,3 +12,7 @@ matrix:
     - if: branch =~ front
     
       script: cd front && ./build-docker.sh
+
+    - if: branch =~ services/weather
+    
+      script: cd back/services/haskell/weather && ./build-docker.sh
