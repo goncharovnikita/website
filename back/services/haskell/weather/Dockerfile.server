@@ -1,10 +1,8 @@
-FROM haskell:8.8.1
+FROM phadej/ghc:8.6.5-bionic-slim
 
 WORKDIR /app/weather
 
-COPY ./weather.cabal /app/weather/weather.cabal
-
-RUN cabal install --only-dependencies -j4
+RUN cabal update
 
 COPY . /app/weather
 
