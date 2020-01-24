@@ -1,8 +1,6 @@
-FROM haskell:8.6.5
+FROM haskell:8.8.1
 
 WORKDIR /app/weather
-
-RUN cabal update
 
 COPY ./weather.cabal /app/weather/weather.cabal
 
