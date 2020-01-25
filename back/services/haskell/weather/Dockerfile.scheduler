@@ -6,4 +6,10 @@ COPY . /app/weather
 
 RUN cabal install --install-method=copy --overwrite-policy=always weather-scheduler
 
-CMD ["weather-scheduler"]
+FROM phadej/ghc:8.6.5-bionic-slim as worker
+
+WORKDIR /app
+
+COPY --from=builder /root/.cabal/bin/weather-scheduler .
+
+CMD ["./weather-scheduler"]
