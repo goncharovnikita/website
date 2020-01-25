@@ -6,6 +6,6 @@ RUN cabal update
 
 COPY . /app/weather
 
-RUN cabal install weather-server
+RUN cabal install weather-scheduler
 
-CMD ["weather-server"]
+CMD ["weather-scheduler"]
