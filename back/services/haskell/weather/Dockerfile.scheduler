@@ -4,6 +4,6 @@ WORKDIR /app/weather
 
 COPY . /app/weather
 
-RUN cabal install --overwrite-policy=always weather-scheduler
+RUN cabal install --install-method=copy --overwrite-policy=always weather-scheduler
 
 CMD ["weather-scheduler"]
