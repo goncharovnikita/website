@@ -4,6 +4,6 @@ WORKDIR /app/weather
 
 COPY . /app/weather
 
-RUN cabal install weather-server
+RUN cabal install --overwrite-policy=always weather-server
 
 CMD ["weather-server"]
