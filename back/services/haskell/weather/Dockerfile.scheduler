@@ -1,4 +1,4 @@
-FROM goncharovnikita/website:weather-base
+FROM goncharovnikita/website:weather-base as builder
 
 WORKDIR /app/weather
 
