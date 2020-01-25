@@ -4,7 +4,7 @@ WORKDIR /app/weather
 
 COPY . /app/weather
 
-RUN cabal install --overwrite-policy=always weather-server
+RUN cabal install --install-method=copy --overwrite-policy=always weather-server
 
 FROM alpine as worker
 
