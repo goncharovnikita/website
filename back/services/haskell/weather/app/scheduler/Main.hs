@@ -11,6 +11,7 @@ import System.IO
 import Database.MongoDB
 import System.Cron
 import qualified Data.Text as T
+import Web.Scotty
 
 import Domain
 import Repo
@@ -25,7 +26,10 @@ main = do
     pipe <- connect (host dbHost)
     tids <- execSchedule $ do
         addJob (updateWeatherJob pipe apiKey requestWeatherUrl) cronRaw
-    exitOnQ $ close pipe
+    scotty 3000 $
+        get "/healthcheck" $ html "ok"
+
+neverEnd = neverEnd
 
 updateWeatherJob :: Pipe -> APIKey -> RequestWeatherURL -> IO ()
 updateWeatherJob pipe apiKey requestWeatherUrl = do
