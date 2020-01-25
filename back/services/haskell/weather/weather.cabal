@@ -21,6 +21,7 @@ executable weather-server
   other-modules:       Server
                     ,  Repo
                     ,  Domain
+                    ,  Config
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13
                     ,  mongoDB
@@ -42,6 +43,7 @@ executable weather-scheduler
   other-modules:       Domain
                     ,  Repo
                     ,  WeatherGetter
+                    ,  Config
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13
                     ,  cron
@@ -51,8 +53,9 @@ executable weather-scheduler
                     ,  bson
                     ,  aeson
                     ,  text
-                    ,  req
+                    ,  req == 3.0.0
                     ,  bytestring
+                    ,  modern-uri
   hs-source-dirs:      app/scheduler
                     ,  app/shared
   default-language:    Haskell2010

@@ -14,18 +14,21 @@ import System.Cron
 import Domain
 import Repo
 import WeatherGetter
+import Config
 
 main = do
     apiKey <- getEnv "YANDEX_API_KEY"
-    pipe <- connect (host "localhost")
+    dbHost <- getDbHost
+    requestWeatherUrl <- getEnvVarSafe "REQUEST_WEATHER_URL" "http://localhost:8080/weather.dump.json"
+    pipe <- connect (host dbHost)
     tids <- execSchedule $ do
-        addJob (updateWeatherJob pipe apiKey) "* * * * *"
+        addJob (updateWeatherJob pipe apiKey requestWeatherUrl) "* * * * *"
     exitOnQ $ close pipe
 
-updateWeatherJob :: Pipe -> APIKey -> IO ()
-updateWeatherJob pipe apiKey = do
+updateWeatherJob :: Pipe -> APIKey -> RequestWeatherURL -> IO ()
+updateWeatherJob pipe apiKey requestWeatherUrl = do
     putStrLn "Fetching weather..."
-    w <- requestWeather apiKey
+    w <- requestWeather apiKey requestWeatherUrl
     putStrLn "Weather fetched successfully"
     putStrLn "Inserting weather to db"
     insertWeather pipe w

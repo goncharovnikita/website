@@ -2,8 +2,6 @@ FROM goncharovnikita/website:weather-base
 
 WORKDIR /app/weather
 
-RUN cabal update
-
 COPY . /app/weather
 
 RUN cabal install weather-server
