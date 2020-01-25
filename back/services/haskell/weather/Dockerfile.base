@@ -6,4 +6,4 @@ RUN cabal update
 
 COPY . /app/weather
 
-RUN cabal install --only-dependencies
+RUN cabal install --only-dependencies -j4
