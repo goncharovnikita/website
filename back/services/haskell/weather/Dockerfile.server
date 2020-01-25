@@ -6,7 +6,7 @@ COPY . /app/weather
 
 RUN cabal install --install-method=copy --overwrite-policy=always weather-server
 
-FROM alpine as worker
+FROM phadej/ghc:8.6.5-bionic-slim as worker
 
 WORKDIR /app
 
