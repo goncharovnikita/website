@@ -1,9 +1,15 @@
-FROM goncharovnikita/website:weather-base
+FROM goncharovnikita/website:weather-base as builder
 
 WORKDIR /app/weather
 
 COPY . /app/weather
 
 RUN cabal install --overwrite-policy=always weather-server
+
+FROM alpine as worker
+
+WORKDIR /app
+
+COPY --from=builder /root/.cabal/bin/weather-server .
 
 CMD ["weather-server"]
