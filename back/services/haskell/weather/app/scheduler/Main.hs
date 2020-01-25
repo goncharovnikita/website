@@ -10,6 +10,7 @@ import Data.Char (toLower)
 import System.IO
 import Database.MongoDB
 import System.Cron
+import qualified Data.Text as T
 
 import Domain
 import Repo
@@ -20,9 +21,10 @@ main = do
     apiKey <- getEnv "YANDEX_API_KEY"
     dbHost <- getDbHost
     requestWeatherUrl <- getEnvVarSafe "REQUEST_WEATHER_URL" "http://localhost:8080/weather.dump.json"
+    cronRaw <- fmap T.pack $ getEnvVarSafe "CRON_RAW" "* * * * *"
     pipe <- connect (host dbHost)
     tids <- execSchedule $ do
-        addJob (updateWeatherJob pipe apiKey requestWeatherUrl) "* * * * *"
+        addJob (updateWeatherJob pipe apiKey requestWeatherUrl) cronRaw
     exitOnQ $ close pipe
 
 updateWeatherJob :: Pipe -> APIKey -> RequestWeatherURL -> IO ()
