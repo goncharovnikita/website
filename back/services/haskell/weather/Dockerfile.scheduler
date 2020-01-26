@@ -1,15 +1,5 @@
-FROM goncharovnikita/website:weather-base as builder
+FROM haskell:8.6.5
 
-WORKDIR /app/weather
+RUN stack install
 
-COPY . /app/weather
-
-RUN cabal install --install-method=copy --overwrite-policy=always weather-scheduler
-
-FROM phadej/ghc:8.6.5-bionic-slim as worker
-
-WORKDIR /app
-
-COPY --from=builder /root/.cabal/bin/weather-scheduler .
-
-CMD ["./weather-scheduler"]
+ENTRYPOINT ["weather-scheduler"]
