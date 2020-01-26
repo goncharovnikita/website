@@ -1,5 +1,9 @@
 FROM haskell:8.6.5
 
+WORKDIR /app/weather
+
+ADD . .
+
 RUN stack install
 
 ENTRYPOINT ["weather-server"]
