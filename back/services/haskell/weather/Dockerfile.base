@@ -2,8 +2,6 @@ FROM phadej/ghc:8.6.5-bionic-slim
 
 WORKDIR /app/weather
 
-RUN cabal update
+ADD . .
 
-COPY . /app/weather
-
-RUN cabal install --only-dependencies -j4
+RUN stack install --only-dependencies
