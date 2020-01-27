@@ -1,9 +1,34 @@
-FROM haskell:8.6.5
+FROM goncharovnikita/website:weather-base as dependencies
 
-WORKDIR /app/weather
+FROM fpco/stack-build:lts-13.27 as build
 
-ADD . .
+# Copy compiled dependencies from previous stage
+COPY --from=dependencies /root/.stack /root/.stack
 
-RUN stack install
+COPY . /opt/build/
 
-ENTRYPOINT ["weather-server"]
+WORKDIR /opt/build
+
+RUN stack build --system-ghc weather-server
+
+RUN mv "$(stack path --local-install-root --system-ghc)/bin" /opt/build/bin
+
+# -------------------------------------------------------------------------------------------
+# Base image for stack build so compiled artifact from previous
+# stage should run
+FROM ubuntu:16.04 as app
+
+RUN mkdir -p /opt/app
+
+WORKDIR /opt/app
+
+# Install lib gmp
+COPY --from=dependencies /opt/build/libgmp.deb /tmp
+
+RUN dpkg -i /tmp/libgmp.deb && rm /tmp/libgmp.deb
+
+COPY --from=build /opt/build/bin .
+
+RUN ls /opt/app
+
+CMD ["/opt/app/weather-server"]

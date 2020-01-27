@@ -19,6 +19,7 @@ import WeatherGetter
 import Config
 
 main = do
+    hSetBuffering stdout NoBuffering
     apiKey <- getEnv "YANDEX_API_KEY"
     dbHost <- getDbHost
     requestWeatherUrl <- getEnvVarSafe "REQUEST_WEATHER_URL" "http://localhost:8080/weather.dump.json"
