@@ -1,17 +1,9 @@
-# Loosely based on https://www.fpcomplete.com/blog/2017/12/building-haskell-apps-with-docker
-FROM fpco/stack-build:lts-13.27 as dependencies
+FROM phadej/ghc:8.6.5-bionic-slim
 
-RUN mkdir /opt/build
+WORKDIR /app
 
-WORKDIR /opt/build
+ADD weather.cabal .
 
-# GHC dynamically links its compilation targets to lib gmp
-RUN apt-get update \
-  && apt-get download libgmp10
+RUN cabal update
 
-RUN mv libgmp*.deb libgmp.deb
-
-# Docker build should not use cached layer if any of these is modified
-COPY stack.yaml stack.yaml.lock weather.cabal /opt/build/
-
-RUN stack build --system-ghc --dependencies-only
+RUN cabal install --only-dependencies
