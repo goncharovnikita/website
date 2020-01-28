@@ -2,8 +2,8 @@ FROM phadej/ghc:8.6.5-bionic-slim
 
 WORKDIR /app
 
-ADD weather.cabal .
-
 RUN cabal update
+
+ADD . .
 
 RUN cabal install --only-dependencies
