@@ -12,6 +12,8 @@ FROM node:12.13.0-alpine3.10 as worker
 
 WORKDIR /app
 
+RUN npm i -g nuxt
+
 COPY --from=builder /app/.nuxt .
 
 COPY --from=builder /app/node_modules .
