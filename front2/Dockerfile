@@ -12,12 +12,12 @@ FROM node:12.13.0-alpine3.10 as worker
 
 WORKDIR /app
 
-RUN npm i -g nuxt
+COPY --from=builder /app/.nuxt .nuxt
 
-COPY --from=builder /app/.nuxt .
+COPY --from=builder /app/node_modules node_modules
 
-COPY --from=builder /app/node_modules .
+COPY --from=builder /app/package.json package.json
 
-COPY --from=builder /app/package.json .
+RUN ls -la
 
 CMD ["npm", "run", "start"]
