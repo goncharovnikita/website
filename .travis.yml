@@ -9,9 +9,13 @@ matrix:
     
       script: cd back && ./build-docker.sh
 
-    - if: branch =~ front
+    - if: branch = front
     
       script: cd front && ./build-docker.sh
+
+    - if: branch = front-beta
+    
+      script: cd front2 && ./build-docker.sh
 
     - if: branch = services/weather
     
