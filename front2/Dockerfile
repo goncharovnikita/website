@@ -20,4 +20,4 @@ COPY --from=builder /app/package.json package.json
 
 RUN ls -la
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start", "--", "--H", "0.0.0.0"]
