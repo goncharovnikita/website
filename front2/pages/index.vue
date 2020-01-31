@@ -2,7 +2,7 @@
   <div class="layout">
     <div class="sidebar">
       <div class="sidebar-avatar">
-        <img src="images/avatar.jpg" alt="" class="avatar" />
+        <img src="~/assets/images/avatar.jpg" alt="" class="avatar" />
       </div>
       <div class="credentials">
         <h3>Goncharov Nikita</h3>
@@ -10,13 +10,13 @@
       <div class="sidebar-footer">
         <div class="flex">
           <a href="https://github.com/goncharovnikita"
-            ><img class="icon-img" src="icons/github.svg" alt=""
+            ><img class="icon-img" src="~/assets/icons/github.svg" alt=""
           /></a>
           <a href="https://medium.com/@cashalot"
-            ><img class="icon-img" src="icons/medium.svg" alt=""
+            ><img class="icon-img" src="~/assets/icons/medium.svg" alt=""
           /></a>
           <a href="https://twitter.com/jamberspof"
-            ><img class="icon-img" src="icons/twitter.svg" alt=""
+            ><img class="icon-img" src="~/assets/icons/twitter.svg" alt=""
           /></a>
         </div>
       </div>
