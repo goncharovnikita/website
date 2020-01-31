@@ -6,8 +6,8 @@
 
 <style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Merriweather-Regular', 'Source Sans Pro', -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -25,17 +25,17 @@ html {
 }
 
 @font-face {
-  src: url('/fonts/Merriweather-Regular.ttf');
+  src: url('~assets/fonts/Merriweather-Regular.ttf');
   font-family: 'Merriweather-Regular';
 }
 
 @font-face {
-  src: url('/fonts/Quicksand-Regular.ttf');
+  src: url('~assets/fonts/Quicksand-Regular.ttf');
   font-family: 'Quicksand-Regular';
 }
 
 * {
-  --primary-color: #e6f3ff;
+  --primary-color: #1d2228;
   --sidebar-color: #e6f3ffe8;
   --accent-color: #66b5ff;
   --deep-blue: #004080;
@@ -49,5 +49,9 @@ html {
   margin: 0;
   padding: 0;
   font-family: var(--typeface-font);
+}
+
+#__layout {
+  background-color: var(--primary-color);
 }
 </style>

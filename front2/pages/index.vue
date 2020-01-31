@@ -7,6 +7,7 @@
       <div class="credentials">
         <h3>Goncharov Nikita</h3>
       </div>
+      <div class="menu"></div>
       <div class="sidebar-footer">
         <div class="flex">
           <a href="https://github.com/goncharovnikita"
@@ -50,7 +51,7 @@ export default {
 .sidebar {
   height: 100%;
   grid-area: sidebar;
-  background-color: var(--primary-color);
+  background-color: var(--sidebar-color);
   display: grid;
   grid-template-rows: 25% 5% 1fr 7%;
   grid-template-areas: 'avatar' 'credentials' 'info' 'side-footer';
@@ -79,6 +80,9 @@ export default {
   font-family: var(--titles-font);
   align-self: center;
   justify-self: center;
+  h3 {
+    font-weight: bold;
+  }
 }
 .sidebar-footer {
   grid-area: side-footer;
