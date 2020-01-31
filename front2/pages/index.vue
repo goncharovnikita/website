@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .layout {
   opacity: 1;
   height: 100vh;
