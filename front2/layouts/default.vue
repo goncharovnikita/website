@@ -6,8 +6,9 @@
 
 <style>
 html {
-  font-family: 'Merriweather-Regular', 'Source Sans Pro', -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Roboto Mono', 'Merriweather-Regular', 'Source Sans Pro',
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -36,13 +37,13 @@ html {
 
 * {
   --primary-color: #1d2228;
-  --sidebar-color: #e6f3ffe8;
-  --accent-color: #66b5ff;
+  --sidebar-color: #f2f2f2;
+  --accent-color: #fb8122;
   --deep-blue: #004080;
   --typeface-color: #a3c2c2;
 
-  --titles-font: 'Merriweather-Regular';
-  --typeface-font: 'Quicksand-Regular';
+  --titles-font: 'Roboto Mono';
+  --typeface-font: 'Roboto Mono';
 }
 
 * {
