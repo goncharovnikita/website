@@ -2,14 +2,14 @@
   <div class="layout">
     <div class="sidebar">
       <div class="sidebar-avatar">
-        <img src="~/assets/images/avatar.jpg" alt="" class="avatar" />
+        <img src="~/static/images/avatar.jpg" alt="" class="avatar" />
       </div>
       <div class="credentials">
         <h3>Goncharov Nikita</h3>
       </div>
       <div class="menu"></div>
       <div class="sidebar-footer">
-        <div class="flex">
+        <div class="icons-container">
           <a href="https://github.com/goncharovnikita"
             ><img class="icon-img" src="~/assets/icons/github.svg" alt=""
           /></a>
@@ -53,48 +53,57 @@ export default {
   grid-area: sidebar;
   background-color: var(--sidebar-color);
   display: grid;
-  grid-template-rows: 25% 5% 1fr 7%;
+  grid-template-rows: auto 5% 1fr 7%;
   grid-template-areas: 'avatar' 'credentials' 'info' 'side-footer';
   grid-gap: 10px;
   overflow-y: hidden;
   opacity: 0.8;
 }
 .sidebar-avatar {
+  height: 100%;
   grid-area: avatar;
   min-width: 0;
   display: grid;
   grid-template-columns: 25% 50% 25%;
   grid-template-areas: '. avatar-photo .';
-  padding: 12px;
+  padding: 41px 12px;
 }
 .avatar {
+  height: 140px;
   grid-area: avatar-photo;
   width: initial;
-  height: 100%;
   align-self: center;
-  border-radius: 50%;
+  border-radius: 25px;
   justify-self: center;
 }
 .credentials {
   grid-area: credentials;
-  font-family: var(--titles-font);
   align-self: center;
   justify-self: center;
+  background-color: var(--primary-color);
+  width: 100%;
+  padding: 19px 0;
+
   h3 {
     font-weight: bold;
+    color: var(--accent-color);
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
   }
 }
 .sidebar-footer {
   grid-area: side-footer;
-  width: 50%;
+  width: 100%;
   justify-self: center;
 }
-.flex {
+.icons-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .icon-img {
-  height: 5vh;
+  height: 36px;
   width: auto;
+  margin: 0 29px;
 }
 </style>
