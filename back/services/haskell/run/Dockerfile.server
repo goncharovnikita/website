@@ -1,0 +1,16 @@
+FROM goncharovnikita/website:weather-base as builder
+
+RUN cabal install --enable-executable-static --install-method=copy --overwrite-policy=always exe:weather-server
+
+FROM ubuntu:18.04 as worker
+
+WORKDIR /app
+
+RUN apt-get update && \
+        apt-get -yq --no-install-suggests --no-install-recommends install \
+        netbase \
+        ca-certificates
+
+COPY --from=builder /root/.cabal/bin/weather-server .
+
+CMD ["./weather-server"]

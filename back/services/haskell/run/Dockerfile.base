@@ -1,0 +1,9 @@
+FROM phadej/ghc:8.6.5-bionic-slim
+
+WORKDIR /app
+
+RUN cabal update
+
+ADD . .
+
+RUN cabal install --only-dependencies
