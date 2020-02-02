@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-weather">
+  <div class="layout">
     <sidebar></sidebar>
     <div class="content">
       <div class="title-container"><h2 class="title">Погода</h2></div>
@@ -48,8 +48,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.layout-weather {
+<style lang="scss" scoped>
+.layout {
   opacity: 1;
   min-height: 100vh;
   display: grid;
