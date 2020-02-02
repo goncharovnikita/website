@@ -56,7 +56,7 @@ export default {
   min-height: 100vh;
   display: grid;
   grid-template-areas: 'sidebar content';
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 300px 700px;
   z-index: 199;
 
   @media (max-width: 600px) {
