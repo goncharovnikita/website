@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="main-content">
     <nuxt />
   </div>
 </template>
 
-<style>
+<style lang="scss">
 html {
   font-family: 'Roboto Mono', 'Merriweather-Regular', 'Source Sans Pro',
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
@@ -30,6 +30,10 @@ h2,
 h3,
 p {
   margin: 0;
+}
+
+.main-content {
+  max-width: 1200px;
 }
 
 @font-face {
@@ -61,5 +65,7 @@ p {
 
 #__layout {
   background-color: var(--primary-color);
+  display: flex;
+  justify-content: space-around;
 }
 </style>

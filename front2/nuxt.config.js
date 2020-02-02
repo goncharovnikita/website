@@ -53,7 +53,9 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    // Device type
+    '@nuxtjs/device'
   ],
   env: {
     apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001',
