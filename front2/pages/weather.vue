@@ -66,11 +66,10 @@ export default {
 <style lang="scss">
 .layout-weather {
   opacity: 1;
-  height: 100vh;
+  min-height: 100vh;
   display: grid;
   grid-template-areas: 'sidebar content';
   grid-template-columns: 30% 70%;
-  grid-template-rows: 100% 100%;
   z-index: 199;
 
   @media (max-width: 600px) {
@@ -79,6 +78,12 @@ export default {
     grid-template-columns: 100%;
     z-index: 199;
     background-size: cover;
+  }
+}
+
+.sidebar {
+  @media (max-width: 600px) {
+    display: none;
   }
 }
 
