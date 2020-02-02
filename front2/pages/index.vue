@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-index">
+  <div class="layout">
     <sidebar></sidebar>
   </div>
 </template>
@@ -14,8 +14,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.layout-index {
+<style lang="scss" scoped>
+.layout {
   opacity: 1;
   min-height: 100vh;
   display: grid;
@@ -26,7 +26,6 @@ export default {
 
   @media (max-width: 600px) {
     display: grid;
-    grid-template-areas: 'content';
     grid-template-columns: 100%;
     z-index: 199;
     background-size: cover;

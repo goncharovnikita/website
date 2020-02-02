@@ -22,15 +22,14 @@
     </div></div
 ></template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sidebar {
   height: 100%;
   grid-area: sidebar;
   background-color: var(--sidebar-color);
   display: grid;
-  grid-template-rows: auto 5% 1fr 7%;
+  grid-template-rows: auto auto 1fr auto;
   grid-template-areas: 'avatar' 'credentials' 'info' 'side-footer';
-  grid-gap: 10px;
   overflow-y: hidden;
   opacity: 0.8;
 }
@@ -72,9 +71,14 @@
   }
 }
 .sidebar-footer {
+  padding-bottom: 41px;
   grid-area: side-footer;
   width: 100%;
   justify-self: center;
+
+  @media (max-width: 600px) {
+    padding-bottom: 21px;
+  }
 }
 .icons-container {
   display: flex;
