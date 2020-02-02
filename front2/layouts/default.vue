@@ -18,12 +18,6 @@ html {
   box-sizing: border-box;
 }
 
-html,
-body,
-#__nuxt {
-  height: 100%;
-}
-
 *,
 *:before,
 *:after {
@@ -67,6 +61,5 @@ p {
 
 #__layout {
   background-color: var(--primary-color);
-  height: 100%;
 }
 </style>
