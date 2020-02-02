@@ -2,7 +2,7 @@
   <div class="layout">
     <sidebar></sidebar>
     <div class="content">
-      <div class="title-container"><h2 class="title">Погода</h2></div>
+      <div class="title-container"><content-title>Погода</content-title></div>
       <div class="weather-container">
         <div class="weather-box">
           <span class="temperature">{{ temperature }}</span>
@@ -23,11 +23,13 @@
 import axios from 'axios'
 import Sidebar from '~/components/Sidebar'
 import Date from '~/components/Date'
+import ContentTitle from '~/components/ContentTitle'
 
 export default {
   components: {
     Sidebar,
-    Date
+    Date,
+    ContentTitle
   },
   async asyncData({ env }) {
     const reqUrl = env.apiBaseUrl + env.requestWeatherUrl
@@ -86,10 +88,6 @@ export default {
 
 .title-container {
   grid-area: title;
-  padding: 20px 41px;
-  .title {
-    color: white;
-  }
 }
 
 .weather-container {
