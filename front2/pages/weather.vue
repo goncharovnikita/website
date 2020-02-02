@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <sidebar></sidebar>
+    <sidebar active="weather"></sidebar>
     <div class="content">
       <div class="title-container"><content-title>Погода</content-title></div>
       <div class="weather-container">

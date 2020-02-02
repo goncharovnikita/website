@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <sidebar></sidebar>
+    <sidebar active="projects"></sidebar>
     <div class="content-container">
       <content-title>Проекты</content-title>
       <div class="projects-list">
