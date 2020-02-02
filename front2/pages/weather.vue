@@ -7,7 +7,7 @@
         <div class="weather-box">
           <span class="temperature">{{ temperature }}</span>
           <client-only>
-            <p class="updated-title">Обновлено: {{ temperatureUpdatedDate }}</p>
+            <p class="updated-title">Обновлено: <date v-bind:date="date" /></p>
           </client-only>
         </div>
       </div>
@@ -22,10 +22,12 @@
 <script>
 import axios from 'axios'
 import Sidebar from '~/components/Sidebar'
+import Date from '~/components/Date'
 
 export default {
   components: {
-    Sidebar
+    Sidebar,
+    Date
   },
   async asyncData({ env }) {
     const reqUrl = env.apiBaseUrl + env.requestWeatherUrl
@@ -41,26 +43,7 @@ export default {
       return `-${tInt}`
     })()
 
-    const toDoubleNum = (num) => {
-      if (num.toString().length === 1) {
-        return `0${num}`
-      }
-
-      return num
-    }
-
-    const temperatureUpdatedDate = (() => {
-      const d = new Date(dt)
-      const y = toDoubleNum(d.getFullYear())
-      const m = toDoubleNum(d.getMonth() + 1)
-      const dd = toDoubleNum(d.getDate())
-      const h = toDoubleNum(d.getHours())
-      const min = toDoubleNum(d.getMinutes())
-
-      return `${dd}.${m}.${y} ${h}:${min}`
-    })()
-
-    return { temperature, temperatureUpdatedDate }
+    return { temperature, date: dt }
   }
 }
 </script>
