@@ -6,7 +6,9 @@
       <div class="weather-container">
         <div class="weather-box">
           <span class="temperature">{{ temperature }}</span>
-          <p class="updated-title">Обновлено: {{ temperatureUpdatedDate }}</p>
+          <client-only>
+            <p class="updated-title">Обновлено: {{ temperatureUpdatedDate }}</p>
+          </client-only>
         </div>
       </div>
 
@@ -83,7 +85,7 @@ export default {
 
 .sidebar {
   @media (max-width: 600px) {
-    display: none;
+    display: none !important;
   }
 }
 
