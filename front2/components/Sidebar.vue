@@ -6,7 +6,17 @@
     <div class="credentials">
       <h3><n-link to="/">Goncharov Nikita</n-link></h3>
     </div>
-    <div class="menu"></div>
+    <div class="menu">
+      <ul class="menu-list">
+        <li v-for="item of menuItems">
+          <nuxt-link
+            v-bind:to="item.src"
+            v-bind:class="{ active: item.active }"
+            >{{ item.title }}</nuxt-link
+          >
+        </li>
+      </ul>
+    </div>
     <div class="sidebar-footer">
       <div class="icons-container">
         <a href="https://github.com/goncharovnikita"
@@ -21,6 +31,40 @@
       </div>
     </div></div
 ></template>
+
+<script>
+export default {
+  props: {
+    active: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    menuItems() {
+      return [
+        {
+          id: 'projects',
+          title: 'Проекты',
+          src: '/',
+          active: false
+        },
+        {
+          id: 'weather',
+          title: 'Погода',
+          src: '/weather',
+          active: false
+        }
+      ].map((item) => {
+        return {
+          ...item,
+          active: item.id === this.active
+        }
+      })
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .sidebar {
@@ -41,6 +85,26 @@
   grid-template-columns: 25% 50% 25%;
   grid-template-areas: '. avatar-photo .';
   padding: 41px 12px;
+}
+.menu {
+  grid-area: info;
+  padding: 36px;
+
+  &-list {
+    list-style-type: none;
+    font-size: 20px;
+    li {
+      margin-bottom: 12px;
+      a {
+        text-decoration: none;
+        color: #000000;
+        &.active {
+          font-weight: bold;
+          border-bottom: 2px solid #000000;
+        }
+      }
+    }
+  }
 }
 .avatar {
   height: 140px;
