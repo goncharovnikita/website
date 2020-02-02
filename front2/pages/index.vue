@@ -2,16 +2,18 @@
   <div class="layout">
     <sidebar active="projects"></sidebar>
     <div class="content-container">
-      <content-title>Проекты</content-title>
-      <div class="projects-list">
-        <project-card
-          v-for="project in projectCards"
-          v-bind:title="project.title"
-          v-bind:description="project.description"
-          v-bind:href="project.href"
-          v-bind:img="project.img"
-          v-bind:links="project.links"
-        ></project-card>
+      <div class="content">
+        <content-title>Проекты</content-title>
+        <div class="projects-list">
+          <project-card
+            v-for="project in projectCards"
+            v-bind:title="project.title"
+            v-bind:description="project.description"
+            v-bind:href="project.href"
+            v-bind:img="project.img"
+            v-bind:links="project.links"
+          ></project-card>
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +71,7 @@ export default {
   min-height: 100vh;
   display: grid;
   grid-template-areas: 'sidebar content';
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 300px 1fr;
   grid-template-rows: 100% 100%;
   z-index: 199;
 
@@ -83,6 +85,14 @@ export default {
 
 .content-container {
   grid-area: content;
+  display: flex;
+  justify-content: space-around;
+  @media (max-width: 600px) {
+    display: none;
+  }
+  .content {
+    max-width: 700px;
+  }
 }
 .projects-list {
   padding: 0 41px;

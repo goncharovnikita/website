@@ -41,26 +41,36 @@ export default {
     }
   },
   computed: {
-    menuItems() {
+    menuItems({ isMobile }) {
       return [
         {
           id: 'projects',
           title: 'Проекты',
           src: '/',
-          active: false
+          active: false,
+          desktopOnly: true
         },
         {
           id: 'weather',
           title: 'Погода',
           src: '/weather',
-          active: false
+          active: false,
+          desktopOnly: true
         }
-      ].map((item) => {
-        return {
-          ...item,
-          active: item.id === this.active
-        }
-      })
+      ]
+        .filter(({ desktopOnly }) => {
+          if (desktopOnly) {
+            return !isMobile
+          }
+
+          return true
+        })
+        .map((item) => {
+          return {
+            ...item,
+            active: item.id === this.active
+          }
+        })
     }
   }
 }
