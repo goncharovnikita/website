@@ -55,6 +55,11 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv'
   ],
+  env: {
+    apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001',
+    requestWeatherUrl:
+      process.env.REQUEST_WEATHER_URL || '/http://localhost:3000/'
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
