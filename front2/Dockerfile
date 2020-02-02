@@ -6,6 +6,14 @@ COPY . /app
 
 RUN npm install
 
+ARG apiBaseUrl=https://api.goncharovnikita.com
+
+ARG requestWeatherUrl=/weather/
+
+ENV API_BASE_URL=${apiBaseUrl}
+
+ENV REQUEST_WEATHER_URL=${requestWeatherUrl}
+
 RUN npm run build
 
 FROM node:12.13.0-alpine3.10 as worker
