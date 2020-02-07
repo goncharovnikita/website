@@ -14,62 +14,75 @@ instance FromJSON ObjectId where
     parseJSON = withText "ObjectId" $ (return . read . T.unpack)
 
 -- RunStat
+data Month = Month {
+        year :: Int
+      , month :: Int
+      , day :: Int
+      } deriving (Show, Generic)
+
 data RunStat = RunStat {
         totalKm :: Int
-      } deriving (Show)
+      } deriving (Show, Generic)
 
-createWeather :: Int -> Int -> Bool -> IO (Weather)
-createWeather tInt tFl upZero = do
-    wId <- genObjectId
-    dt <- getCurrentTime
-    return $ Weather wId tInt tFl upZero dt
+instance FromJSON RunStat
 
-instance FromJSON Weather where
-    parseJSON = withObject "Weather" $ \v -> Weather
+instance ToJSON RunStat where
+    toEncoding = genericToEncoding defaultOptions
+
+instance FromJSON Month
+
+instance ToJSON Month where
+    toEncoding = genericToEncoding defaultOptions
+
+encodeRunStat :: RunStat -> ByteString
+encodeRunStat = encode
+-- End RunStat
+
+-- VendorRunStat
+data GetActivitiesResponse = GetActivitiesResponse {
+        activities :: [RunActivity]
+       } deriving (Show, Generic)
+
+data RunActivity = RunActivity {
+        id :: String
+      , actType :: String
+      , startEpochMs :: Int
+      , endEpochMs :: Int
+      , activeDurationMs :: Int
+      , summaries :: [RunActivitySummary]
+       } deriving (Show)
+
+data RunActivitySummary = RunActivitySummary {
+        metric :: String
+      , value :: Double
+       } deriving (Show, Generic)
+
+instance FromJSON GetActivitiesResponse
+
+instance FromJSON RunActivity where
+    parseJSON = withObject "RunActivity" $ \v -> RunActivity
         <$> v .: "id"
-        <*> v .: "tInt"
-        <*> v .: "tFl"
-        <*> v .: "upZero"
-        <*> v .: "dt"
+        <*> v .: "type"
+        <*> v .: "start_epoch_ms"
+        <*> v .: "end_epoch_ms"
+        <*> v .: "active_duration_ms"
+        <*> v .: "summaries"
 
-instance ToJSON Weather where
-    toJSON (Weather wId tInt tFl upZero dt) = object ["id" .= show wId, "tInt" .= tInt, "tFl" .= tFl, "upZero" .= upZero, "dt" .= dt]
+instance FromJSON RunActivitySummary
 
-    toEncoding (Weather wId tInt tFl upZero dt) = pairs ("id" .= show wId <> "tInt" .= tInt <> "tFl" .= tFl <> "upZero" .= upZero <> "dt" .= dt)
+-- Calculations
 
-encodeWeather :: Weather -> ByteString
-encodeWeather = encode
--- End Weather
+calculateTotalKmFromGetActivityResponse :: GetActivitiesResponse -> Double
+calculateTotalKmFromGetActivityResponse (GetActivitiesResponse acts) = calculateTotalKmFromActivities acts
 
--- VendorWeather
-data VendorWeather = VendorWeather {
-    nowDt :: UTCTime
-  , fact :: WeatherFact
-                                   } deriving (Show, Generic)
+calculateTotalKmFromActivities :: [RunActivity] -> Double
+calculateTotalKmFromActivities [] = 0
+calculateTotalKmFromActivities ((RunActivity _ actType _ _ _ sum):xs) 
+    | actType == "run" = (calculateTotalKmFromSummaries (sum)) + (calculateTotalKmFromActivities xs)
+    | otherwise = calculateTotalKmFromActivities xs
 
-instance ToJSON VendorWeather where
-    toEncoding = genericToEncoding defaultOptions
-
-instance FromJSON VendorWeather where
-    parseJSON = withObject "VendorWeather" $ \v -> VendorWeather
-        <$> v .: "now_dt"
-        <*> v .: "fact"
-
-data WeatherFact = WeatherFact {
-    temp :: Int
-                               } deriving (Show, Generic)
-
-
-instance ToJSON WeatherFact where
-    toEncoding = genericToEncoding defaultOptions
-
-instance FromJSON WeatherFact
--- End VendorWeather
-
-weatherFromVendor :: VendorWeather -> IO (Weather)
-weatherFromVendor (VendorWeather nowDt (WeatherFact temp)) = do
-    wId <- genObjectId
-    let tInt = abs temp
-        upZero = temp > 0
-        tFl = 0
-    return $ Weather wId tInt tFl upZero nowDt
+calculateTotalKmFromSummaries :: [RunActivitySummary] -> Double
+calculateTotalKmFromSummaries [] = 0
+calculateTotalKmFromSummaries ((RunActivitySummary metric value):xs)
+    | metric == "distance" = value + (calculateTotalKmFromSummaries xs)
+    | otherwise = calculateTotalKmFromSummaries xs
