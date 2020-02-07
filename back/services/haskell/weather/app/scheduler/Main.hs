@@ -12,6 +12,7 @@ import Database.MongoDB
 import System.Cron
 import qualified Data.Text as T
 import Web.Scotty
+import Data.Time.Clock (getCurrentTime, addUTCTime, nominalDay)
 
 import Domain
 import Repo
@@ -19,6 +20,9 @@ import WeatherGetter
 import Config
 
 main = do
+    startScheduler
+
+startScheduler = do
     hSetBuffering stdout NoBuffering
     apiKey <- getEnv "YANDEX_API_KEY"
     dbHost <- getDbHost
@@ -40,6 +44,12 @@ updateWeatherJob pipe apiKey requestWeatherUrl = do
     putStrLn "Inserting weather to db"
     insertWeather pipe w
     putStrLn "Weather inserted successfully"
+    putStrLn "---"
+    putStrLn "Removing old weather data..."
+    now <- getCurrentTime
+    let dt = addUTCTime (-nominalDay * 3) now
+    removeWeatherSince pipe dt
+    putStrLn "Old weather data removed successfully"
 
 
 exitOnQ :: IO () -> IO ()

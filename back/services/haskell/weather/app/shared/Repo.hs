@@ -1,8 +1,9 @@
 {-# LANGUAGE ExtendedDefaultRules #-}
-module Repo (getLastWeather, insertWeather) where
+module Repo (getLastWeather, insertWeather, removeWeatherSince) where
 
 import Database.MongoDB
 import Control.Monad.Trans (liftIO, MonadIO)
+import Data.Time.Clock (UTCTime)
 
 import Domain
 
@@ -38,3 +39,11 @@ insertWeather :: Pipe -> Weather -> IO ()
 insertWeather pipe (Weather tId tInt tFl upZero dt) = do
     withPipe pipe $ do
         insert_ "weather" ["_id" =: tId, "t_int" =: tInt, "t_fl" =: tFl, "up_zero" =: upZero, "dt" =: dt]
+
+removeWeatherSince :: Pipe -> UTCTime -> IO ()
+removeWeatherSince pipe dt = do
+    withPipe pipe $ do
+        delete (select (weatherSinceSelector dt) "weather")
+
+weatherSinceSelector :: UTCTime -> Selector
+weatherSinceSelector dt = [ "dt" =: [ "$lte" =: dt ] ]
