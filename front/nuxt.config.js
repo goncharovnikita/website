@@ -55,7 +55,19 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     // Device type
-    '@nuxtjs/device'
+    '@nuxtjs/device',
+    // Yandex metrika
+    [
+      '@nuxtjs/yandex-metrika',
+      {
+        id: '57556537',
+        webvisor: false,
+        clickmap: true,
+        useCDN: false,
+        trackLinks: true,
+        accurateTrackBounce: true
+      }
+    ]
   ],
   env: {
     apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001',
