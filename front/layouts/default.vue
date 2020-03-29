@@ -50,6 +50,7 @@ p {
   --primary-color: #1d2228;
   --sidebar-color: #f2f2f2;
   --accent-color: #fb8122;
+  --error-color: #cc0000;
   --deep-blue: #004080;
   --typeface-color: #a3c2c2;
 
@@ -60,7 +61,6 @@ p {
 * {
   margin: 0;
   padding: 0;
-  font-family: var(--typeface-font);
 }
 
 #__layout {

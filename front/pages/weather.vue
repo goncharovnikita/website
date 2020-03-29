@@ -3,12 +3,19 @@
     <sidebar active="weather"></sidebar>
     <div class="content">
       <div class="title-container"><content-title>Погода</content-title></div>
-      <div class="weather-container">
+      <div v-if="!error" class="weather-container">
         <div class="weather-box">
           <span class="temperature">{{ temperature }}</span>
           <client-only>
             <p class="updated-title">Обновлено: <date v-bind:date="date" /></p>
           </client-only>
+        </div>
+      </div>
+
+      <div v-else class="weather-container">
+        <div class="weather-box">
+          <p class="error-message">Some error occurred</p>
+          <app-button @click="reloadPage" text="Reload page"></app-button>
         </div>
       </div>
 
@@ -24,28 +31,40 @@ import axios from 'axios'
 import Sidebar from '~/components/Sidebar'
 import Date from '~/components/Date'
 import ContentTitle from '~/components/ContentTitle'
+import Button from '~/components/Button'
 
 export default {
   components: {
     Sidebar,
     Date,
-    ContentTitle
+    ContentTitle,
+    'app-button': Button
   },
   async asyncData({ env }) {
-    const reqUrl = env.apiBaseUrl + env.requestWeatherUrl
-    const {
-      data: { tInt, upZero, dt }
-    } = await axios.get(reqUrl)
+    try {
+      const reqUrl = env.apiBaseUrl + env.requestWeatherUrl
+      const {
+        data: { tInt, upZero, dt }
+      } = await axios.get(reqUrl)
 
-    const temperature = (() => {
-      if (upZero) {
-        return `+${tInt}`
-      }
+      const temperature = (() => {
+        if (upZero) {
+          return `+${tInt}`
+        }
 
-      return `-${tInt}`
-    })()
+        return `-${tInt}`
+      })()
 
-    return { temperature, date: dt }
+      return { temperature, date: dt, error: false }
+    } catch {
+      return { error: true }
+    }
+  },
+
+  methods: {
+    reloadPage() {
+      document.location.reload()
+    }
   }
 }
 </script>
@@ -72,6 +91,13 @@ export default {
   @media (max-width: 600px) {
     display: none !important;
   }
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 2rem;
+  line-height: 2rem;
+  text-align: center;
 }
 
 .content {
