@@ -14,7 +14,6 @@ const reloadPage = () => {
 };
 
 function Weather(props) {
-    console.log(props);
     return (
         <Layout>
             <Sidebar active="weather" />

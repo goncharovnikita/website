@@ -21,7 +21,7 @@ function Sidebar(props) {
   return (
     <Container>
       <Avatar>
-        <img src="/images/avatar.jpg" alt="" className="avatar" />
+        <img src={require('images/avatar.jpg?webp') } load="lazy" alt="" className="avatar" />
       </Avatar>
       <Credentials>
         <h3>

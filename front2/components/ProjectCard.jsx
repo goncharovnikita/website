@@ -15,7 +15,7 @@ export default function ProjectCard(props) {
         </p>
       </Title>
       <ImgContainer>
-        <img src={img} alt={title} className="img" />
+        <img src={img} alt={title} load="lazy" className="img" />
       </ImgContainer>
       <DescriptionContainer>
         <p className="description-text">{description}</p>
