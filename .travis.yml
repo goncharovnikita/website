@@ -15,7 +15,7 @@ matrix:
 
     - if: branch = front-beta
     
-      script: cd front && ./build-docker.sh
+      script: cd front2 && ./build-docker.sh
 
     - if: branch = services/weather
     
