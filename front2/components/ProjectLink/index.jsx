@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styles from "./index.module.scss";
 
 const typeImg = type => {
   switch (type) {
@@ -21,26 +21,13 @@ export default function ProjectLink(props) {
   const img = typeImg(type);
 
   return (
-    <Link
+    <a
       href={href}
-      className="project-link-container"
+      className={styles.link}
       rel="noopener noreferrer"
       target="blank">
-      <img src={img} className="icon" alt="" />
-      <span className="type">{text}</span>
-    </Link>
+      <img src={img} className={styles.icon} alt="" />
+      <span className={styles.type}>{text}</span>
+    </a>
   );
 }
-
-const Link = styled.a`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-column-gap: 12px;
-  text-decoration: none;
-  color: #000000;
-
-  .icon {
-    height: 20px;
-    width: 20px;
-  }
-`;

@@ -2,7 +2,7 @@ import axios from "axios";
 
 import Link from "next/link";
 import getConfig from 'next/config';
-import styled from "styled-components";
+import styles from './weather.module.scss';
 
 import ContentTitle from "../components/ContentTitle";
 import Sidebar from "../components/Sidebar";
@@ -15,29 +15,29 @@ const reloadPage = () => {
 
 function Weather(props) {
     return (
-        <Layout>
+        <div className={styles.layout}>
             <Sidebar active="weather" />
-            <div className="content">
-                <div className="title-container">
+            <div className={styles.content}>
+                <div className={styles.titleContainer}>
                     <ContentTitle>Погода</ContentTitle>
                 </div>
                 {!props.error ? (
-                    <div className="weather-container">
-                        <div className="weather-box">
-                            <span className="temperature">
+                    <div className={styles.weatherContainer}>
+                        <div className={styles.weatherBox}>
+                            <span className={styles.temperature}>
                                 {props.temperature}
                             </span>
                             <client-only>
-                                <p className="updated-title">
+                                <p className={styles.updatedTitle}>
                                     Обновлено: <AppDate date={props.date} />
                                 </p>
                             </client-only>
                         </div>
                     </div>
                 ) : (
-                    <div className="weather-container">
-                        <div className="weather-box">
-                            <p className="error-message">Some error occurred</p>
+                    <div className={styles.weatherContainer}>
+                        <div className={styles.weatherBox}>
+                            <p className={styles.errorMessage}>Some error occurred</p>
                             <AppButton
                                 onClick={reloadPage}
                                 text="Reload page"
@@ -46,13 +46,13 @@ function Weather(props) {
                     </div>
                 )}
 
-                <div className="footer-container">
+                <div className={styles.footerContainer}>
                     <Link href="/">
-                        <a className="footer-title">На главную</a>
+                        <a className={styles.footerTitle}>На главную</a>
                     </Link>
                 </div>
             </div>
-        </Layout>
+        </div>
     );
 }
 
@@ -78,97 +78,5 @@ Weather.getInitialProps = async function(context) {
         return { error: true };
     }
 };
-
-const Layout = styled.div`
-    opacity: 1;
-    min-height: 100vh;
-    display: grid;
-    grid-template-areas: "sidebar content";
-    grid-template-columns: 300px 700px;
-    z-index: 199;
-
-    @media (max-width: 600px) {
-        display: grid;
-        grid-template-areas: "content";
-        grid-template-columns: 100%;
-        z-index: 199;
-        background-size: cover;
-    }
-
-    .sidebar {
-        @media (max-width: 600px) {
-            display: none !important;
-        }
-    }
-
-    .error-message {
-        color: var(--error-color);
-        font-size: 2rem;
-        line-height: 2rem;
-        text-align: center;
-    }
-
-    .content {
-        grid-area: content;
-        display: grid;
-        grid-template-areas: "title" "body";
-        grid-template-rows: auto 1fr;
-
-        @media (max-width: 600px) {
-            grid-template-areas: "title" "body" "footer";
-            grid-template-rows: auto 1fr auto;
-        }
-    }
-
-    .title-container {
-        grid-area: title;
-    }
-
-    .weather-container {
-        grid-area: body;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        .weather-box {
-            display: grid;
-            grid-row-gap: 24px;
-            background-color: var(--sidebar-color);
-            padding: 57px 24px;
-
-            @media (max-width: 600px) {
-                width: 100%;
-            }
-
-            .temperature {
-                color: var(--primary-color);
-                font-size: 8rem;
-                line-height: 8rem;
-                text-align: center;
-            }
-
-            .updated-title {
-                text-align: center;
-            }
-        }
-    }
-
-    .footer-container {
-        grid-area: footer;
-        padding: 22px;
-        text-align: center;
-        display: none;
-
-        @media (max-width: 600px) {
-            display: block;
-        }
-
-        .footer-title {
-            color: var(--accent-color);
-            text-align: center;
-            font-size: 20px;
-        }
-    }
-`;
 
 export default Weather;

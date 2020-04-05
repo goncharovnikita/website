@@ -1,15 +1,11 @@
-import styled from 'styled-components';
+import styles from "./app.module.scss";
 
 import '../styles/index.scss';
 
-const MainContent = styled.div`
-  max-width: 1200px;
-`;
-
 export default function MyApp({Component, pageProps}) {
   return (
-    <MainContent>
+    <div className={styles.content}>
       <Component {...pageProps} />
-    </MainContent>
+    </div>
   );
 }
