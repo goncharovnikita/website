@@ -74,6 +74,7 @@ Weather.getInitialProps = async function(context) {
 
         return { temperature, date: dt, error: false };
     } catch (e) {
+        console.error(e);
         return { error: true };
     }
 };
