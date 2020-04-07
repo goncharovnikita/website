@@ -23,7 +23,7 @@ function Sidebar(props) {
         <div className={styles.container}>
             <div className={styles.avatar}>
                 <img
-                    src={require("images/avatar.jpg?webp")}
+                    src={require("images/avatar.jpg?webp&resize&size=280")}
                     load="lazy"
                     alt=""
                     className={styles.avatarImg}

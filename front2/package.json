@@ -18,7 +18,9 @@
     "babel-plugin-styled-components": "^1.10.7",
     "imagemin-mozjpeg": "^8.0.0",
     "next-optimized-images": "^2.5.7",
+    "responsive-loader": "^1.2.0",
     "sass": "^1.26.3",
+    "sharp": "^0.25.2",
     "webp-loader": "^0.6.0"
   }
 }

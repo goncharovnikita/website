@@ -11,7 +11,7 @@ const projectCards = [
         description:
             "ReactVPN - это мобильное приложение, позволяющее создать быстрое VPN соединение с одним из многих серверов по всему миру",
         href: "https://reactvpn.com",
-        img: require("images/reactvpn-logo.png?webp"),
+        img: require("images/reactvpn-logo.png?resize&size=240"),
         links: [
             {
                 type: "web",
@@ -24,7 +24,7 @@ const projectCards = [
         description:
             "Parsumsearch - быстрый и удобный поиск духов по брендам, нотам и названиям",
         href: "https://parfumsearch.com",
-        img: require("images/parfumsearch-logo.png?webp"),
+        img: require("images/parfumsearch-logo.png?resize&size=240"),
         links: [
             {
                 type: "web",
