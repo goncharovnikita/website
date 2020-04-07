@@ -1,4 +1,4 @@
-FROM node:12.13.0-alpine3.10 as builder
+FROM node:12.13.0 as builder
 
 WORKDIR /app
 
@@ -20,7 +20,11 @@ FROM node:12.13.0-alpine3.10 as worker
 
 WORKDIR /app
 
-COPY --from=builder /app/.nuxt .nuxt
+COPY --from=builder /app/.next .next
+
+COPY --from=builder /app/public public
+
+COPY --from=builder /app/next.config.js next.config.js
 
 COPY --from=builder /app/node_modules node_modules
 
@@ -28,4 +32,4 @@ COPY --from=builder /app/package.json package.json
 
 RUN ls -la
 
-CMD ["npm", "run", "start", "--", "--H", "0.0.0.0"]
+CMD ["npm", "run", "start", "--", "-H", "0.0.0.0"]
