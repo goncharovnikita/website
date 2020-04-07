@@ -1,4 +1,3 @@
-import Head from "next/head";
 import styles from "./index.module.scss";
 
 import Sidebar from "../components/Sidebar";
@@ -36,11 +35,6 @@ const projectCards = [
 
 const Home = () => (
     <>
-        <Head>
-            <title>Goncharov Nikita</title>
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
-
         <div className={styles.layout}>
             <Sidebar active="projects" />
             <div className={styles.contentContainer}>
