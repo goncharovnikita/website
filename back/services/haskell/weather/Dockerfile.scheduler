@@ -1,34 +1,16 @@
-FROM goncharovnikita/website:weather-base as dependencies
+FROM goncharovnikita/website:weather-base as builder
 
-FROM fpco/stack-build:lts-13.27 as build
+RUN cabal install --enable-executable-static --install-method=copy --overwrite-policy=always exe:weather-scheduler
 
-# Copy compiled dependencies from previous stage
-COPY --from=dependencies /root/.stack /root/.stack
+FROM ubuntu:18.04 as worker
 
-COPY . /opt/build/
+WORKDIR /app
 
-WORKDIR /opt/build
+RUN apt-get update && \
+        apt-get -yq --no-install-suggests --no-install-recommends install \
+        netbase \
+        ca-certificates
 
-RUN stack build --system-ghc weather-scheduler
+COPY --from=builder /root/.cabal/bin/weather-scheduler .
 
-RUN mv "$(stack path --local-install-root --system-ghc)/bin" /opt/build/bin
-
-# -------------------------------------------------------------------------------------------
-# Base image for stack build so compiled artifact from previous
-# stage should run
-FROM ubuntu:16.04 as app
-
-RUN mkdir -p /opt/app
-
-WORKDIR /opt/app
-
-# Install lib gmp
-COPY --from=dependencies /opt/build/libgmp.deb /tmp
-
-RUN dpkg -i /tmp/libgmp.deb && rm /tmp/libgmp.deb
-
-COPY --from=build /opt/build/bin .
-
-RUN ls /opt/app
-
-CMD ["/opt/app/weather-scheduler"]
+CMD ["./weather-scheduler"]

@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:8.9.1 as builder
+FROM node:12.13.0 as builder
 
 WORKDIR /app
 
@@ -6,14 +6,30 @@ COPY . /app
 
 RUN npm install
 
+ARG apiBaseUrl=https://api.goncharovnikita.com
+
+ARG requestWeatherUrl=/weather/
+
+ENV API_BASE_URL=${apiBaseUrl}
+
+ENV REQUEST_WEATHER_URL=${requestWeatherUrl}
+
 RUN npm run build
 
-FROM nginx:alpine
+FROM node:12.13.0-alpine3.10 as worker
 
-COPY --from=builder /app/public /usr/share/nginx/html
+WORKDIR /app
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/.next .next
 
-EXPOSE 80
+COPY --from=builder /app/public public
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app/next.config.js next.config.js
+
+COPY --from=builder /app/node_modules node_modules
+
+COPY --from=builder /app/package.json package.json
+
+RUN ls -la
+
+CMD ["npm", "run", "start", "--", "-H", "0.0.0.0"]
