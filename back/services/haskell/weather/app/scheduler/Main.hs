@@ -19,18 +19,16 @@ import Repo
 import WeatherGetter
 import Config
 
-main = do
-    startScheduler
+main = startScheduler
 
 startScheduler = do
     hSetBuffering stdout NoBuffering
     apiKey <- getEnv "YANDEX_API_KEY"
     dbHost <- getDbHost
     requestWeatherUrl <- getEnvVarSafe "REQUEST_WEATHER_URL" "http://localhost:8080/weather.dump.json"
-    cronRaw <- fmap T.pack $ getEnvVarSafe "CRON_RAW" "* * * * *"
+    cronRaw <- T.pack <$> getEnvVarSafe "CRON_RAW" "* * * * *"
     pipe <- connect (host dbHost)
-    tids <- execSchedule $ do
-        addJob (updateWeatherJob pipe apiKey requestWeatherUrl) cronRaw
+    tids <- execSchedule $ addJob (updateWeatherJob pipe apiKey requestWeatherUrl) cronRaw
     scotty 3000 $
         get "/healthcheck" $ html "ok"
 
@@ -47,7 +45,7 @@ updateWeatherJob pipe apiKey requestWeatherUrl = do
     putStrLn "---"
     putStrLn "Removing old weather data..."
     now <- getCurrentTime
-    let dt = addUTCTime (-nominalDay * 3) now
+    let dt = addUTCTime (-nominalDay * 30) now
     removeWeatherSince pipe dt
     putStrLn "Old weather data removed successfully"
 

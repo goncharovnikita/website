@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric, DuplicateRecordFields #-}
 module Domain where
 
 import Data.Bson (ObjectId, genObjectId)
@@ -21,6 +21,16 @@ data Weather = Weather {
       , upZero :: Bool
       , dt     :: UTCTime
       } deriving (Show)
+
+data AvgWeather = AvgWeather {
+        dt :: UTCTime
+      , tAvg :: Double
+} deriving (Show, Generic)
+
+instance FromJSON AvgWeather
+
+instance ToJSON AvgWeather where
+    toEncoding = genericToEncoding defaultOptions
 
 createWeather :: Int -> Int -> Bool -> IO (Weather)
 createWeather tInt tFl upZero = do

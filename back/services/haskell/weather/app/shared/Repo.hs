@@ -1,9 +1,11 @@
-{-# LANGUAGE ExtendedDefaultRules #-}
-module Repo (getLastWeather, insertWeather, removeWeatherSince) where
+{-# LANGUAGE ExtendedDefaultRules, DuplicateRecordFields #-}
+module Repo (getWeather, getLastWeather, insertWeather, removeWeatherSince) where
 
 import Database.MongoDB
 import Control.Monad.Trans (liftIO, MonadIO)
 import Data.Time.Clock (UTCTime)
+
+import Prelude hiding (lookup)
 
 import Domain
 
@@ -20,6 +22,23 @@ getLastWeather pipe = do
                                            }
         buildWeatherRecord w
 
+getWeather :: Pipe -> (UTCTime, UTCTime) -> IO [AvgWeather]
+getWeather pipe dts = withPipe pipe $ do
+    w <- aggregate "weather" $ buildGetWeatherPipeline dts
+
+    return $ fmap buildAvgWeatherRecordSafe w
+
+buildGetWeatherPipeline :: (UTCTime, UTCTime) -> Pipeline
+buildGetWeatherPipeline (dtFrom, dtTo) =
+    [
+        [
+            "$match" =: ["dt" =: ["$gte" =: dtFrom, "$lte" =: dtTo]]
+        ]
+    ,   ["$group" =: ["_id" =: ["$dateToString" =: ["date" =: "$dt", "format" =: "%Y-%m-%d"]], "tAvg" =: ["$avg" =: ["$sum" =: ["$t_int", "$t_fl"]]]]]
+    ,   ["$project" =: ["_id" =: ["$dateFromString" =: ["dateString" =: "$_id", "format" =: "%Y-%m-%d"]], "tAvg" =: 1]]
+    ,   ["$sort" =: ["_id" =: -1]]
+    ]
+
 buildWeatherRecord :: Maybe Document -> Action IO (Maybe Weather)
 buildWeatherRecord w = do
     case w of
@@ -33,6 +52,14 @@ buildWeatherRecord w = do
           liftIO $ putStrLn $ show $ unt
           return Nothing
       Nothing -> return Nothing
+
+
+buildAvgWeatherRecordSafe :: Document -> AvgWeather
+buildAvgWeatherRecordSafe doc =
+    AvgWeather {
+      dt = typed $ (valueAt "_id" doc)
+    , tAvg = typed $ (valueAt "tAvg" doc)
+    }
 
 
 insertWeather :: Pipe -> Weather -> IO ()
