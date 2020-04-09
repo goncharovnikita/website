@@ -12,6 +12,8 @@ main :: IO ()
 main = do
     hSetBuffering stdout NoBuffering
 
+    loadDotenv
+
     dbHost <- getDbHost
     pipe <- connect (host dbHost)
     start pipe

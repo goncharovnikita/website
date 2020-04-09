@@ -1,5 +1,7 @@
 FROM goncharovnikita/website:weather-base as builder
 
+ADD . .
+
 RUN cabal install --enable-executable-static --install-method=copy --overwrite-policy=always exe:weather-scheduler
 
 FROM ubuntu:18.04 as worker
