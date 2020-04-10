@@ -12,21 +12,23 @@ import Database.MongoDB
 import System.Cron
 import qualified Data.Text as T
 import Web.Scotty
+import Data.Time.Clock (getCurrentTime, addUTCTime, nominalDay)
 
 import Domain
 import Repo
 import WeatherGetter
 import Config
 
-main = do
+main = startScheduler
+
+startScheduler = do
     hSetBuffering stdout NoBuffering
     apiKey <- getEnv "YANDEX_API_KEY"
     dbHost <- getDbHost
     requestWeatherUrl <- getEnvVarSafe "REQUEST_WEATHER_URL" "http://localhost:8080/weather.dump.json"
-    cronRaw <- fmap T.pack $ getEnvVarSafe "CRON_RAW" "* * * * *"
+    cronRaw <- T.pack <$> getEnvVarSafe "CRON_RAW" "* * * * *"
     pipe <- connect (host dbHost)
-    tids <- execSchedule $ do
-        addJob (updateWeatherJob pipe apiKey requestWeatherUrl) cronRaw
+    tids <- execSchedule $ addJob (updateWeatherJob pipe apiKey requestWeatherUrl) cronRaw
     scotty 3000 $
         get "/healthcheck" $ html "ok"
 
@@ -40,6 +42,12 @@ updateWeatherJob pipe apiKey requestWeatherUrl = do
     putStrLn "Inserting weather to db"
     insertWeather pipe w
     putStrLn "Weather inserted successfully"
+    putStrLn "---"
+    putStrLn "Removing old weather data..."
+    now <- getCurrentTime
+    let dt = addUTCTime (-nominalDay * 30) now
+    removeWeatherSince pipe dt
+    putStrLn "Old weather data removed successfully"
 
 
 exitOnQ :: IO () -> IO ()
