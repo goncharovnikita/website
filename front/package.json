@@ -13,7 +13,8 @@
     "next": "9.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-yandex-metrika": "^2.6.0"
+    "react-yandex-metrika": "^2.6.0",
+    "recharts": "^1.8.5"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.7",

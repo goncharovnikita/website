@@ -9,7 +9,8 @@ module.exports = withOptimizedImages({
     },
     publicRuntimeConfig: {
         apiBaseUrl: "https://api.goncharovnikita.com",
-        requestWeatherUrl: process.env.REQUEST_WEATHER_URL || "/weather"
+        requestWeatherUrl: process.env.REQUEST_WEATHER_URL || "/weather",
+        requestWeatherHistoryUrl: process.env.REQUEST_WEATHER_HISTORY_URL || "/weather/history"
     },
     webpack(config) {
         config.resolve.alias.images = path.join(__dirname, "assets/images");
