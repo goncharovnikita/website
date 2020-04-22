@@ -6,43 +6,33 @@
     grid-template-rows: auto auto 1fr auto;
     grid-template-areas: "avatar" "credentials" "info" "side-footer";
     overflow-y: hidden;
-    opacity: 0.8;
 }
 
 .avatar {
     height: 100%;
     grid-area: avatar;
     min-width: 0;
+    padding: 2.8em 0.8em;
     display: grid;
-    grid-template-columns: 25% 50% 25%;
-    grid-template-areas: ". avatar-photo .";
-    padding: 41px 12px;
+    justify-content: center;
 
     &Img {
         height: 140px;
-        grid-area: avatar-photo;
-        width: initial;
-        align-self: center;
+        width: 140px;
         border-radius: 25px;
-        justify-self: center;
     }
 }
 
 .credentials {
     grid-area: credentials;
-    align-self: center;
-    justify-self: center;
     background-color: var(--primary-color);
-    width: 100%;
-    padding: 19px 0;
+    padding: 1.2em 0;
 
     h3 {
-        font-weight: bold;
         color: var(--accent-color);
-        margin: 0;
         text-align: center;
-        font-weight: 500;
-        font-size: 24px;
+        font-size: 1.5rem;
+
         a {
             text-decoration: none;
             color: var(--accent-color);
@@ -52,19 +42,36 @@
 
 .menu {
     grid-area: info;
-    padding: 36px;
+    padding: 2.4em;
 
     &List {
         list-style-type: none;
-        font-size: 20px;
+        font-size: 1.2rem;
+
         li {
-            margin-bottom: 12px;
             a {
+                display: block;
                 text-decoration: none;
-                color: #000000;
-                &.active {
-                    font-weight: bold;
-                    border-bottom: 2px solid #000000;
+                padding: 0.35em 0;
+            }
+
+            span {
+                color: #000;
+                border-bottom: 1px solid transparent;
+                transition: all 75ms ease-in;
+            }
+
+            &:hover {
+                span {
+                    border-bottom-color: var(--accent-color);
+                }
+            }
+
+            &.active {
+                span {
+                    color: #000;
+                    border-bottom-color: var(--accent-color);
+                    border-bottom-width: 2px;
                 }
             }
         }
@@ -72,14 +79,8 @@
 }
 
 .footer {
-    padding-bottom: 41px;
+    padding-bottom: 2.5em;
     grid-area: side-footer;
-    width: 100%;
-    justify-self: center;
-
-    @media (max-width: 600px) {
-        padding-bottom: 21px;
-    }
 }
 
 .iconsContainer {
@@ -87,8 +88,8 @@
     justify-content: center;
 
     .iconImg {
-        height: 36px;
-        width: auto;
-        margin: 0 29px;
+        height: 2.25em;
+        width: 2.25em;
+        margin: 0 1.7em;
     }
 }

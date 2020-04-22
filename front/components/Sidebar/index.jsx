@@ -39,14 +39,15 @@ function Sidebar(props) {
             <div className={styles.menu}>
                 <ul className={styles.menuList}>
                     {links.map(item => (
-                        <li key={item.id}>
+                        <li
+                            key={item.id}
+                            className={cls({
+                                [styles.active]: props.active === item.id
+                            })}
+                        >
                             <Link href={item.href}>
-                                <a
-                                    className={cls({
-                                        [styles.active]: props.active === item.id
-                                    })}
-                                >
-                                    {item.title}
+                                <a>
+                                    <span>{item.title}</span>
                                 </a>
                             </Link>
                         </li>
