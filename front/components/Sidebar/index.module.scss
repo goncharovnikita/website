@@ -1,11 +1,15 @@
 .container {
-    height: 100%;
     grid-area: sidebar;
     background-color: var(--sidebar-color);
     display: grid;
     grid-template-rows: auto auto 1fr auto;
     grid-template-areas: "avatar" "credentials" "info" "side-footer";
     overflow-y: hidden;
+
+    @media screen and (max-width: 420px) {
+        grid-template-areas: "avatar" "credentials" "info" "side-footer";
+        grid-template-rows: auto auto auto auto;
+    }
 }
 
 .avatar {

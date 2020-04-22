@@ -7,6 +7,12 @@
     grid-column-gap: 1.5em;
     background-color: var(--sidebar-color);
     padding: 1.5em 2em;
+
+    @media screen and (max-width: 420px) { 
+        grid-template: "title" "image" "description";
+        grid-template-rows: auto auto auto;
+        grid-template-columns: auto;
+    }
 }
 
 .title {
