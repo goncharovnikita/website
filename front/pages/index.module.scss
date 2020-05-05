@@ -2,17 +2,19 @@
     opacity: 1;
     min-height: 100vh;
     display: grid;
-    grid-template-areas: "sidebar content";
-    grid-template-columns: 18.75em 1fr;
-    grid-template-rows: 100% 100%;
-    z-index: 199;
+    grid-template-areas: "sidebar" "content";
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
 
-    @media (max-width: 420px) {
-        grid-template-areas: "sidebar" "content";
-        grid-template-columns: auto;
-        grid-template-rows: auto auto;
-        z-index: 199;
-        background-size: cover;
+    @media screen and (min-width: 421px) {
+        grid-template-columns: 100%;
+        grid-template-rows: 3em 1fr;
+    }
+
+    @media (min-width: 769px) {
+        grid-template-areas: "sidebar content";
+        grid-template-columns: 18.75em 1fr;
+        grid-template-rows: 100% 100%;
     }
 }
 

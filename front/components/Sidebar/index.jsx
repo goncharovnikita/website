@@ -30,7 +30,7 @@ function Sidebar(props) {
                 />
             </div>
             <div className={styles.credentials}>
-                <h3>
+                <h3 className="font-title">
                     <Link href="/">
                         <a>Goncharov Nikita</a>
                     </Link>
@@ -56,21 +56,21 @@ function Sidebar(props) {
             </div>
             <div className={styles.footer}>
                 <div className={styles.iconsContainer}>
-                    <a href="https://github.com/goncharovnikita">
+                    <a href="https://github.com/goncharovnikita" className={styles.link}>
                         <img
                             className={styles.iconImg}
                             src="/icons/github.svg"
                             alt=""
                         />
                     </a>
-                    <a href="https://medium.com/@cashalot">
+                    <a href="https://medium.com/@cashalot" className={styles.link}>
                         <img
                             className={styles.iconImg}
                             src="/icons/medium.svg"
                             alt=""
                         />
                     </a>
-                    <a href="https://twitter.com/jamberspof">
+                    <a href="https://twitter.com/jamberspof" className={styles.link}>
                         <img
                             className={styles.iconImg}
                             src="/icons/twitter.svg"
