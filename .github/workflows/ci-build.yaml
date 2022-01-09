@@ -6,7 +6,7 @@ on:
       - master
     tags:
     paths:
-      - ".github/workflows/ci-build.yml"
+      - ".github/workflows/ci-build.yaml"
       - "front/**"
       - ".dockerignore"
       - "Dockerfile"
